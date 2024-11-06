@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import "./globals.css";
 
 // const geistSans = localFont({
@@ -20,7 +21,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <header>
+          <Navbar />
+        </header>
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
