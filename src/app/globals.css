@@ -63,6 +63,17 @@ body {
   }
 }
 
+#blog-post-images {
+  border: 1px solid #000;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border-bottom: 5px solid #000;
+  height: 350px;
+  width: 755px;
+  object-position: center;
+  object-fit: cover;
+}
+
 @layer base {
   * {
     @apply border-border;
