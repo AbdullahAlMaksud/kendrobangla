@@ -28,7 +28,7 @@ function Editor() {
         <Toolbar />
         <RichTextPlugin
           contentEditable={
-            <ContentEditable className="focus:outline-none rounded-sm min-h-60 shadow-md px-5 py-3" />
+            <ContentEditable className="focus:outline-none rounded-lg shadow-md px-5 py-3" />
           }
           placeholder={
             <div className="absolute top-16 px-5 py-3 text-gray-500">

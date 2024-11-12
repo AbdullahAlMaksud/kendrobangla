@@ -1,15 +1,11 @@
+import Footer from "@/components/footer/Footer";
 import { Anek_Bangla } from "next/font/google";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar/Navbar";
 import "./globals.css";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
 //   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
 //   weight: "100 900",
 // });
 
@@ -19,8 +15,7 @@ export const metadata = {
     "শিক্ষা, বিজ্ঞান, প্রযুক্তিসহ বিভিন্ন বিষয় নিয়ে সঠিক তথ্য সমৃদ্ধ সহজবোধ্য ফিচার পড়ুন কেন্দ্রবাংলায়।",
 };
 
-const anekBangla = Anek_Bangla({subsets: ['bengali']})
-
+const anekBangla = Anek_Bangla({ subsets: ["bengali"] });
 
 export default function RootLayout({ children }) {
   return (
@@ -30,6 +25,7 @@ export default function RootLayout({ children }) {
           <Navbar />
         </header>
         <main className={anekBangla.className}>{children}</main>
+        <Footer />
       </body>
     </html>
   );
