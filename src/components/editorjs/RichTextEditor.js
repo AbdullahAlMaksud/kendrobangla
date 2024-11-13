@@ -29,7 +29,7 @@ const RichTextEditor = ({ editorRef }) => {
                 const formData = new FormData();
                 formData.append("image", file);
                 const response = await fetch(
-                  `https://api.imgbb.com/1/upload?key=1e1bb4ef74f324e59913c48aca9c1048`,
+                  `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
                   {
                     method: "POST",
                     body: formData,

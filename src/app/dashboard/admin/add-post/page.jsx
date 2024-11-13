@@ -2,19 +2,44 @@
 import RichTextEditor from "@/components/editorjs/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios"; // Make sure axios is installed
 import { Eye, Save, Upload } from "lucide-react";
+import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
-const page = () => {
-  const editorRef = useRef(null);
-  const editor = useRef(null);
-  const blogTitle = useRef(null);
-  const [content, setContent] = useState("");
-  const [blogHead, setBlogHead] = useState("");
-  const [savedData, setSavedData] = useState(null);
-  const { getRootProps, getInputProps } = useDropzone();
 
-  console.log(blogHead);
+const Page = () => {
+  const editorRef = useRef(null);
+  const titleRef = useRef(null);
+  const tagsRef = useRef(null);
+  const categoryRef = useRef(null);
+  const dateRef = useRef(null);
+  const writerRef = useRef(null);
+  const seoKeywordRef = useRef(null);
+  const metaDescriptionRef = useRef(null);
+  const featuredPhotoCaptionRef = useRef(null);
+  const [savedData, setSavedData] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "image/*",
+    onDrop: async (acceptedFiles) => {
+      if (acceptedFiles.length === 0) return;
+      const file = acceptedFiles[0];
+
+      try {
+        const formData = new FormData();
+        formData.append("image", file);
+        const response = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+          formData
+        );
+        setImageUrl(response.data.data.url);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    },
+  });
 
   const getHeadingClass = (level) => {
     switch (level) {
@@ -132,7 +157,6 @@ const page = () => {
     }
   };
 
-  // Helper function to style links
   const styleLinks = (text) => {
     return text
       .replace(
@@ -142,53 +166,33 @@ const page = () => {
       .replace(/<\/a>/g, "</a>");
   };
 
-  // Helper function to parse inline links
-  const parseLinks = (text) => {
-    const regex = /(https?:\/\/[^\s]+)/g; // Match any URL starting with http:// or https://
-    return text.split(regex).map((part, index) => {
-      if (regex.test(part)) {
-        // If the part matches a URL, wrap it in an <a> tag
-        return (
-          <a
-            key={index}
-            href={part}
-            className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {part}
-          </a>
-        );
-      }
-      return part;
-    });
-  };
-
   const handleSave = async () => {
-    const outputData = await editorRef.current.save();
-    setSavedData(outputData);
-    console.log(outputData); // Set the saved data to state for rendering
+    const editorData = await editorRef.current.save();
+
+    const inputDataArray = {
+      title: titleRef.current?.value,
+      tags: tagsRef.current?.value,
+      category: categoryRef.current?.value,
+      publishedDate: dateRef.current?.value,
+      writer: writerRef.current?.value,
+      seoKeyword: seoKeywordRef.current?.value,
+      metaDescription: metaDescriptionRef.current?.value,
+      featurePhotoCaption: featuredPhotoCaptionRef.current?.value,
+      featurePhotoUrl: imageUrl,
+      editorData,
+    };
+
+    setSavedData(inputDataArray);
+    console.log("Input Data Array:", inputDataArray);
   };
 
   return (
-    <div className="pt-16 rounded-b-sm relative">
+    <div className="pt-16 rounded-b-sm -z-10 relative">
       <div className="min-h-80 top-0 min-w-full absolute -z-20 bg-primary"></div>
       <div className="container mx-auto p-2">
-        {/* <Head>
-          <title>Next.js Rich Text Editor</title>
-          <meta
-            name="description"
-            content="Rich text editor with Editor.js in Next.js"
-          />
-        </Head> */}
-        {/* <h1 className="py-2 text-primary-foreground font-bold text-center text-xl uppercase">
-          Add a Post
-        </h1> */}
-        <div
-          className="bg-primary/50
-         p-2 rounded-sm"
-        >
+        <div className="bg-primary/50 p-2 rounded-sm">
           <Textarea
+            ref={titleRef}
             className="w-full py-5 px-5 text-3xl font-bold bg-white rounded-t-md rounded-b-none resize-none border-transparent"
             rows={1}
             placeholder="শিরোনাম"
@@ -199,54 +203,74 @@ const page = () => {
           <div className="container shadow-sm shadow-black/30 mx-auto flex gap-2 px-3 py-4 bg-secondary flex-col">
             <div className="flex gap-2">
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={tagsRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="Tags"
               />
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={categoryRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="Category"
               />
             </div>
             <div className="flex gap-2">
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={dateRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="Date"
               />
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={writerRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="Writer"
               />
             </div>
             <div className="flex flex-col gap-2">
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={seoKeywordRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="SEO Keyword"
               />
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={metaDescriptionRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="Meta description"
               />
+
               <div
-                className="bg-white shadow-sm flex items-center gap-2 flex-col p-2 py-5 border text-center"
+                className="bg-white shadow-sm flex items-center justify-center gap-2 flex-col p-2 py-5 border text-center"
                 {...getRootProps()}
               >
                 <input {...getInputProps()} />
-                <Upload className="size-5" />
-                <p className="text-xs">Add Featured photo</p>
+                {imageUrl ? (
+                  <Image
+                    src={imageUrl}
+                    alt="Uploaded"
+                    className="w-full h-auto rounded-md"
+                  />
+                ) : (
+                  <>
+                    <Upload className="size-5" />
+                    <p className="text-xs">Add Featured photo</p>
+                  </>
+                )}
               </div>
+
               <Textarea
-                className="w-full py-2 px-3 text-sm bg-white rounded-sm flex-wrap min-h-min resize-none"
+                ref={featuredPhotoCaptionRef}
+                className="w-full py-2 px-3 text-sm bg-white rounded-sm"
                 rows={1}
                 placeholder="Featured photo caption"
               />
             </div>
           </div>
+
           <div className="flex gap-2">
             <Button
               onClick={handleSave}
@@ -270,65 +294,13 @@ const page = () => {
         </div>
 
         {savedData && (
-          <div className="mt-8 border rounded-sm">
-            {savedData.blocks.map((block, index) => (
-              <div key={index} className="block">
-                {renderBlock(block)}
-              </div>
-            ))}
+          <div className="mt-8 border rounded-sm p-2">
+            <pre>{JSON.stringify(savedData?.editorData, null, 2)}</pre>
           </div>
         )}
       </div>
-
-      {/* <div className="container rounded-sm shadow-sm shadow-black/30 mb-10 mx-auto pt-5 bg-primary-foreground px-5">
-        <Textarea
-          ref={blogTitle}
-          value={blogHead}
-          onChange={(e) => setBlogHead(e.target.value)}
-          type="text"
-          className="w-full py-2 h-10 mb-5 border rounded-sm px-5 text-4xl font-bold bg-white shadow-inner overflow-y-auto resize-none"
-          placeholder="শিরোনাম"
-        ></Textarea>
-        <JoditEditor
-          ref={editor}
-          value={content}
-          onChange={(newContent) => setContent(newContent)}
-        ></JoditEditor>
-
-        <div className="mt-10">
-          <div className="grid grid-cols-12 *:bg-secondary-foreground *:my-2 *:w-full *:rounded-sm *:px-2 gap-2 *:col-span-3 *:flex *:justify-center *:items-center *:text-white">
-            <Textarea placeholder="Tags" className="resize-none"></Textarea>
-            <Textarea placeholder="Category" className="resize-none"></Textarea>
-            <Textarea placeholder="Times" className="resize-none"></Textarea>
-            <Textarea
-              placeholder="Meta title"
-              className="resize-none"
-            ></Textarea>
-            <Textarea placeholder="Metadata" className="resize-none"></Textarea>
-            <Textarea placeholder="Metadata" className="resize-none"></Textarea>
-            <Textarea
-              placeholder="Seo Keywords"
-              className="resize-none"
-            ></Textarea>
-            <Textarea placeholder="Writers" className="resize-none"></Textarea>
-          </div>
-        </div>
-        <div className="py-5 flex gap-4">
-          <Button className="bg-secondary-foreground text-secondary">
-            Save as Draft
-          </Button>
-          <Button className="w-full">Add Post</Button>
-        </div>
-      </div>
-      <div className="min-h-20 bg-primary/20 mb-10 container mx-auto rounded-sm overflow-y-auto border border-primary p-4">
-        <p className="text-4xl font-bold">{blogHead}</p>
-        <p dangerouslySetInnerHTML={{ __html: content }} />
-      </div>
-      <div className="bg-primary h-40 py-10">
-        <Editor />
-      </div> */}
     </div>
   );
 };
 
-export default page;
+export default Page;
