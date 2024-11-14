@@ -11,12 +11,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { SidebarTrigger } from "../ui/sidebar";
 
 const Navbar = () => {
   return (
     <nav className="fixed w-full">
       <div className="bg-primary-foreground/90 backdrop-blur-sm shadow-sm shadow-black/20 text-white flex justify-between md:justify-between items-center h-16 px-8 flex-row-reverse">
+        {/* Profile */}
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild aria-label="User menu">
@@ -40,7 +40,7 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-
+        {/* Logo */}
         <Link href="/">
           <Image
             src={logo}
@@ -50,7 +50,7 @@ const Navbar = () => {
             className="object-cover"
           />
         </Link>
-
+        {/* Large Display */}
         <div className="hidden md:flex text-primary justify-between text-sm">
           <Link
             className={`hover:text-secondary-foreground hover:border-b-2 hover:border-primary duration-300 border-b-2 ease-linear hover:bg-primary/10 px-3 py-1 rounded-t-sm border-transparent`}
@@ -65,13 +65,7 @@ const Navbar = () => {
             Dashboard
           </Link>
         </div>
-
-        <div
-          className="size-8 bg-secondary border border-primary rounded-full
-             flex items-center justify-center text-black hover:bg-primary"
-        >
-          <SidebarTrigger className="hover:bg-primary rounded-full" />
-        </div>
+        {/* Sidebar */}
       </div>
     </nav>
   );

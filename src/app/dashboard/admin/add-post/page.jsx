@@ -1,12 +1,17 @@
 "use client";
-import RichTextEditor from "@/components/editorjs/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios"; // Make sure axios is installed
 import { Eye, Save, Upload } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
+
+const RichTextEditor = dynamic(
+  () => import("@/components/editorjs/RichTextEditor"),
+  { ssr: false }
+);
 
 const Page = () => {
   const editorRef = useRef(null);

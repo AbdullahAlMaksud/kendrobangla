@@ -1,14 +1,7 @@
 import Footer from "@/components/footer/Footer";
-import { AppSidebar } from "@/components/ui/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { Anek_Bangla } from "next/font/google";
 import Navbar from "../components/navbar/Navbar";
 import "./globals.css";
-// const geistSans = localFont({
-//   src: "./fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
 
 export const metadata = {
   title: "কেন্দ্রবাংলা | একটি পরিপূর্ণ বাংলা ওয়েব ম্যাগাজিন",
@@ -21,16 +14,13 @@ const anekBangla = Anek_Bangla({ subsets: ["bengali"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <SidebarProvider className="bg-primary hidden">
-        <body>
-          <header>
-            <Navbar />
-          </header>
-          <AppSidebar />
-          <main className={anekBangla.className}>{children}</main>
-          <Footer />
-        </body>
-      </SidebarProvider>
+      <body>
+        <header>
+          <Navbar />
+        </header>
+        <main className={anekBangla.className}>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
