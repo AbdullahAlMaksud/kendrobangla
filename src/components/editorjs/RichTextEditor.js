@@ -63,7 +63,7 @@ const RichTextEditor = ({ editorRef }) => {
     <div className="">
       <div
         id="editorjs"
-        className="p-4 bg-white min-h-[calc(100vh-555px)]"
+        className="p-4 bg-white min-h-[calc(100vh-655px)]"
       ></div>
     </div>
   );
