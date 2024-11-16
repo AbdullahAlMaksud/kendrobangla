@@ -1,3 +1,4 @@
+import AdSense from "@/components/AdSense";
 import Navbar from "../components/Navbar";
 import "./globals.css";
 
@@ -21,6 +22,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <AdSense pId="ca-pub-9291982094033631" />
+      </head>
       <body>
         <header>
           <Navbar />
