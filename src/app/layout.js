@@ -18,7 +18,7 @@ const anekBangla = Anek_Bangla({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressContentEditableWarning={true}>
+    <html lang="en" suppressHydrationWarning={true}>
       <body suppressHydrationWarning={true}>
         <header>
           <Navbar />
