@@ -9,7 +9,9 @@ const Navbar = () => {
     <nav className="fixed w-full">
       <div className="bg-primary-foreground/90 backdrop-blur-sm shadow-sm shadow-black/20 text-white flex justify-between md:justify-between items-center h-16 px-4 flex-row">
         {/* Profile */}
-        <ProfileDropDown />
+        <div className="lg:hidden">
+          <ProfileDropDown />
+        </div>
         {/* Logo */}
         <Link href="/" className="">
           <Image
@@ -21,7 +23,7 @@ const Navbar = () => {
           />
         </Link>
         {/* Large Display */}
-        <div className="hidden md:flex text-primary justify-between text-sm">
+        <div className="hidden lg:flex text-primary justify-between text-sm">
           <Link
             className={`hover:text-secondary-foreground hover:border-b-2 hover:border-primary duration-300 border-b-2 ease-linear hover:bg-primary/10 px-3 py-1 rounded-t-sm border-transparent`}
             href="/"
@@ -36,7 +38,9 @@ const Navbar = () => {
           </Link>
         </div>
         {/* Sidebar */}
-        <SheetSide />
+        <div className="lg:hidden">
+          <SheetSide />
+        </div>
       </div>
     </nav>
   );
