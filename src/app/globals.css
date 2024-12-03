@@ -63,6 +63,28 @@ body {
   }
 }
 
+#blog-post-images {
+  border: 1px solid #000;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border-bottom: 5px solid #000;
+  height: 350px;
+  width: 755px;
+  object-position: center;
+  object-fit: cover;
+}
+
+.sidebar-wrapper {
+  display: hidden !important;
+}
+
+.codex-editor__redactor {
+  padding-bottom: 10px !important;
+}
+.ce-header {
+  font-size: 2rem !important;
+}
+
 @layer base {
   * {
     @apply border-border;

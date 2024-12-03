@@ -1,17 +1,8 @@
-import AdSense from "@/components/AdSense";
-import Navbar from "../components/Navbar";
-import "./globals.css";
+import Footer from "@/components/footer/Footer";
+import { Anek_Bangla } from "next/font/google";
+import Navbar from "../components/navbar/Navbar";
 
-// const geistSans = localFont({
-//   src: "./fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
+import "./globals.css";
 
 export const metadata = {
   title: "কেন্দ্রবাংলা | একটি পরিপূর্ণ বাংলা ওয়েব ম্যাগাজিন",
@@ -19,17 +10,22 @@ export const metadata = {
     "শিক্ষা, বিজ্ঞান, প্রযুক্তিসহ বিভিন্ন বিষয় নিয়ে সঠিক তথ্য সমৃদ্ধ সহজবোধ্য ফিচার পড়ুন কেন্দ্রবাংলায়।",
 };
 
+const anekBangla = Anek_Bangla({
+  subsets: ["bengali"],
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
+});
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <AdSense pId="ca-pub-9291982094033631" />
-      </head>
-      <body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true}>
         <header>
           <Navbar />
         </header>
-        <main>{children}</main>
+        <main className={anekBangla.className}>{children}</main>
+        <Footer />
       </body>
     </html>
   );
