@@ -1,47 +1,17 @@
-import { LogOut, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../public/logo.png";
-import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { SheetSide } from "./MenuSidebar";
+import ProfileDropDown from "./ProfileDropDown";
 
 const Navbar = () => {
   return (
     <nav className="fixed w-full">
-      <div className="bg-primary-foreground/90 backdrop-blur-sm shadow-sm shadow-black/20 text-white flex justify-between md:justify-between items-center h-16 px-8 flex-row-reverse">
+      <div className="bg-primary-foreground/90 backdrop-blur-sm shadow-sm shadow-black/20 text-white flex justify-between md:justify-between items-center h-16 px-4 flex-row">
         {/* Profile */}
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild aria-label="User menu">
-              <Button className="size-8 bg-white shadow-none border border-primary text-black rounded-full ">
-                <User2 />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel asChild>
-                <h2 className="">User</h2>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User2 />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <LogOut />
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        <ProfileDropDown />
         {/* Logo */}
-        <Link href="/">
+        <Link href="/" className="">
           <Image
             src={logo}
             alt="KendroBangla Logo"
@@ -66,6 +36,7 @@ const Navbar = () => {
           </Link>
         </div>
         {/* Sidebar */}
+        <SheetSide />
       </div>
     </nav>
   );
