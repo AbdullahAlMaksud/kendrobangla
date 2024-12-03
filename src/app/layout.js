@@ -1,6 +1,7 @@
 import Footer from "@/components/footer/Footer";
 import { Anek_Bangla } from "next/font/google";
 import Navbar from "../components/navbar/Navbar";
+
 import "./globals.css";
 
 export const metadata = {
